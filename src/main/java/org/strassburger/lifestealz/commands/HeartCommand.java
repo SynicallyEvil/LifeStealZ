@@ -66,11 +66,9 @@ public final class HeartCommand implements CommandExecutor, TabCompleter {
      * @return Whether the command was executed successfully
      */
     private boolean handleOtherHeartCheck(CommandSender sender, String targetName) {
-
         PlayerData playerdata;
 
         if(plugin.hasGeyser() && plugin.getGeyserPlayerFile().isPlayerStored(targetName)) {
-
             playerdata = plugin.getStorage().load(plugin.getGeyserManager().getOfflineBedrockPlayerUniqueId(targetName));
 
         } else {
@@ -85,7 +83,7 @@ public final class HeartCommand implements CommandExecutor, TabCompleter {
                 return false;
             }
 
-            playerdata = plugin.getStorage().load(target.getUniqueId());
+            playerdata = (target.isOnline() ? plugin.getStorage().load(target.getUniqueId()) : plugin.getStorage().loadByUsername(target.getName()));
         }
 
         if (playerdata == null) {
@@ -94,6 +92,7 @@ public final class HeartCommand implements CommandExecutor, TabCompleter {
                     "playerNotFound",
                     "&cPlayer not found!"
             ));
+
             return false;
         }
 

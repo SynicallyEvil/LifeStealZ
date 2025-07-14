@@ -88,6 +88,41 @@ public abstract class SQLStorage extends Storage {
         }
     }
 
+    public PlayerData loadByUsername(String username){
+        final String sql = "SELECT * FROM hearts WHERE name = ?";
+
+        try (Connection connection = getConnection()) {
+            if (connection == null) return null;
+
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, username);
+                statement.setQueryTimeout(30);
+
+                try (ResultSet resultSet = statement.executeQuery()) {
+
+                    if (!resultSet.next()) {
+                        Player player = Bukkit.getPlayer(username);
+                        if (player == null) return null;
+                        PlayerData newPlayerData = new PlayerData(player.getName(), player.getUniqueId());
+                        save(newPlayerData);
+                        return newPlayerData;
+                    }
+
+                    return mapResultSetToPlayerData(resultSet, UUID.fromString(resultSet.getString("uuid")));
+                } catch (SQLException e) {
+                    getPlugin().getLogger().log(Level.SEVERE, "Failed to load player data from SQL database:", e);
+                    return null;
+                }
+            } catch (SQLException e) {
+                getPlugin().getLogger().log(Level.SEVERE, "Failed to load player data from SQL database:", e);
+                return null;
+            }
+        } catch (SQLException e) {
+            getPlugin().getLogger().log(Level.SEVERE, "Failed to load player data from SQL database:", e);
+            return null;
+        }
+    }
+
     private PlayerData mapResultSetToPlayerData(ResultSet resultSet, UUID uuid) throws SQLException {
         PlayerData playerData = new PlayerData(resultSet.getString("name"), uuid);
         playerData.setMaxHealth(resultSet.getDouble("maxhp"));

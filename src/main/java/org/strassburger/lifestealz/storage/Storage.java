@@ -49,6 +49,14 @@ public abstract class Storage {
     public abstract PlayerData load(UUID uuid);
 
     /**
+     * Loads the player data from the storage system.
+     *
+     * @param username The username of the player to load.
+     * @return The player data of the player.
+     */
+    public abstract PlayerData loadByUsername(String username);
+
+    /**
      * Get a list of all eliminated players.
      */
     public abstract List<UUID> getEliminatedPlayers();
