@@ -58,7 +58,7 @@ public final class HeartsSubCommand implements SubCommand {
                 return false;
             }
 
-            PlayerData playerData = plugin.getStorage().load(player.getUniqueId());
+            PlayerData playerData = (player.isOnline() ? storage.load(player.getUniqueId()) : storage.loadByUsername(player.getName()));
 
             int hearts = (int) (playerData.getMaxHealth() / 2);
             sender.sendMessage(MessageUtils.getAndFormatMsg(true, "getHearts", "&c%player% &7currently has &c%amount% &7hearts!",
