@@ -93,7 +93,7 @@ public final class HeartsSubCommand implements SubCommand {
             if (targetPlayer == null && targetPlayers.size() > 1) continue;
 
             assert targetPlayer != null;
-            PlayerData targetPlayerData = plugin.getStorage().load(targetPlayer.getUniqueId());
+            PlayerData targetPlayerData = (targetPlayer.isOnline() ? storage.load(targetPlayer.getUniqueId()) : storage.loadByUsername(targetPlayer.getName()));
 
             double maxAllowedHearts = config.getInt("maxHearts") * 2;
             Player targetOnlinePlayer = targetPlayer.getPlayer();
