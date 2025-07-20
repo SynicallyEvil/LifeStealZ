@@ -9,6 +9,7 @@ import org.strassburger.lifestealz.LifeStealZ;
 import org.strassburger.lifestealz.util.MessageUtils;
 import org.strassburger.lifestealz.storage.PlayerData;
 import org.strassburger.lifestealz.storage.Storage;
+import org.strassburger.lifestealz.util.WhitelistManager;
 
 public final class PlayerLoginListener implements Listener {
     private final LifeStealZ plugin;
@@ -21,6 +22,8 @@ public final class PlayerLoginListener implements Listener {
     public void onPlayerLogin(PlayerLoginEvent event) {
         Player player = event.getPlayer();
         Storage storage = plugin.getStorage();
+
+        if (!WhitelistManager.isWorldWhitelisted(player)) return;
 
         PlayerData playerData = loadOrCreatePlayerData(player, storage, plugin.getConfig().getInt("startHearts", 10));
 

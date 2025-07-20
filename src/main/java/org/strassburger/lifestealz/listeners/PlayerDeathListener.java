@@ -38,6 +38,8 @@ public final class PlayerDeathListener implements Listener {
         final Player player = event.getEntity();
         final Player killer = player.getKiller();
 
+        if (!WhitelistManager.isWorldWhitelisted(player)) return;
+
         // WorldGuard check
         if (plugin.hasWorldGuard() && !WorldGuardManager.checkHeartLossFlag(player)) return;
 

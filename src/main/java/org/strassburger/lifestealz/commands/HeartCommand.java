@@ -12,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import org.strassburger.lifestealz.LifeStealZ;
 import org.strassburger.lifestealz.util.MessageUtils;
 import org.strassburger.lifestealz.storage.PlayerData;
+import org.strassburger.lifestealz.util.WhitelistManager;
 
 import java.util.List;
 
@@ -22,9 +23,12 @@ public final class HeartCommand implements CommandExecutor, TabCompleter {
         this.plugin = plugin;
     }
 
+    WhitelistManager wm = new WhitelistManager();
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         String targetName = (args != null && args.length > 0) ? args[0] : null;
+        if (!wm.isWorldWhitelisted(sender)) return false;
 
         if (targetName == null) {
             return handleSelfHeartCheck(sender);

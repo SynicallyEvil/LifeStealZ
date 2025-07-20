@@ -12,6 +12,7 @@ import org.strassburger.lifestealz.LifeStealZ;
 import org.strassburger.lifestealz.util.MessageUtils;
 import org.strassburger.lifestealz.util.WebHookManager;
 import org.strassburger.lifestealz.storage.PlayerData;
+import org.strassburger.lifestealz.util.WhitelistManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public final class ReviveCommand implements CommandExecutor, TabCompleter {
     }
 
     private static final String BYPASS_OPTION = "bypass";
+    WhitelistManager whitelistManager = new WhitelistManager();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
@@ -32,6 +34,8 @@ public final class ReviveCommand implements CommandExecutor, TabCompleter {
             throwUsageError(sender);
             return false;
         }
+
+        if (!whitelistManager.isWorldWhitelisted(sender)) return false;
 
         String targetPlayersArg = args[0];
 
