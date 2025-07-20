@@ -45,7 +45,7 @@ public final class CustomItemManager {
             if (customItemType.equalsIgnoreCase("revivebeacon")) materialString = "BEACON";
             Material material = Material.valueOf(materialString);
 
-            CustomItem ci = new CustomItem(material)
+            /*CustomItem ci = new CustomItem(material)
                     .setName(config.getString(itemId + ".name"))
                     .setLore(config.getStringList(itemId + ".lore"))
                     .setEnchanted(config.getBoolean(itemId + ".enchanted"))
@@ -56,7 +56,16 @@ public final class CustomItemManager {
             ci.getItemStack().setData(
                     DataComponentTypes.CUSTOM_MODEL_DATA,
                     CustomModelData.customModelData().addString("lifestealz_" + itemId).build()
-            );
+            );*/
+
+            CustomItem ci = new CustomItem(material)
+                    .setName(config.getString(itemId + ".name"))
+                    .setLore(config.getStringList(itemId + ".lore"))
+                    .setCustomModelID(config.getInt(itemId + ".customModelData"))
+                    .setEnchanted(config.getBoolean(itemId + ".enchanted"))
+                    .setInvulnerable(config.getBoolean(itemId + ".invulnerable"))
+                    .setDespawnable(config.getBoolean(itemId + ".despawnable"))
+                    .addFlag(ItemFlag.HIDE_ATTRIBUTES);
 
             ItemMeta itemMeta = ci.getItemStack().getItemMeta();
 
@@ -146,7 +155,7 @@ public final class CustomItemManager {
      * @return The close item
      */
     public static ItemStack createCloseItem() {
-        CustomItem ci = new CustomItem(Material.BARRIER)
+        /*CustomItem ci = new CustomItem(Material.BARRIER)
                 .setName(MessageUtils.getAndFormatMsg(false, "closeBtn", "&cClose"))
                 .addFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .makeForbidden();
@@ -156,7 +165,14 @@ public final class CustomItemManager {
                 CustomModelData.customModelData().addString("lifestealz_close").build()
         );
 
-        return ci.getItemStack();
+        return ci.getItemStack();*/
+
+        return new CustomItem(Material.BARRIER)
+                .setName(MessageUtils.getAndFormatMsg(false, "closeBtn", "&cClose"))
+                .setCustomModelID(999)
+                .addFlag(ItemFlag.HIDE_ATTRIBUTES)
+                .makeForbidden()
+                .getItemStack();
     }
 
     /**
@@ -166,7 +182,7 @@ public final class CustomItemManager {
      * @return The back item
      */
     public static ItemStack createBackItem(int page) {
-        CustomItem ci = new CustomItem(Material.ARROW)
+        /*CustomItem ci = new CustomItem(Material.ARROW)
                 .setName(MessageUtils.getAndFormatMsg(false, "backBtn", "&cBack"))
                 .addFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .makeForbidden();
@@ -175,6 +191,16 @@ public final class CustomItemManager {
                 DataComponentTypes.CUSTOM_MODEL_DATA,
                 CustomModelData.customModelData().addString("lifestealz_back").build()
         );
+
+        ItemMeta itemMeta = ci.getItemStack().getItemMeta();
+        itemMeta.getPersistentDataContainer().set(REVIVE_PAGE_KEY, PersistentDataType.INTEGER, page);
+        ci.getItemStack().setItemMeta(itemMeta);*/
+
+        CustomItem ci = new CustomItem(Material.ARROW)
+                .setName(MessageUtils.getAndFormatMsg(false, "backBtn", "&cBack"))
+                .setCustomModelID(998)
+                .addFlag(ItemFlag.HIDE_ATTRIBUTES)
+                .makeForbidden();
 
         ItemMeta itemMeta = ci.getItemStack().getItemMeta();
         itemMeta.getPersistentDataContainer().set(REVIVE_PAGE_KEY, PersistentDataType.INTEGER, page);
@@ -190,7 +216,7 @@ public final class CustomItemManager {
      * @return The next item
      */
     public static ItemStack createNextItem(int page) {
-        CustomItem ci = new CustomItem(Material.ARROW)
+        /*CustomItem ci = new CustomItem(Material.ARROW)
                 .setName(MessageUtils.getAndFormatMsg(false, "nextBtn", "&cNext"))
                 .addFlag(ItemFlag.HIDE_ATTRIBUTES)
                 .makeForbidden();
@@ -199,6 +225,16 @@ public final class CustomItemManager {
                 DataComponentTypes.CUSTOM_MODEL_DATA,
                 CustomModelData.customModelData().addString("lifestealz_next").build()
         );
+
+        ItemMeta itemMeta = ci.getItemStack().getItemMeta();
+        itemMeta.getPersistentDataContainer().set(REVIVE_PAGE_KEY, PersistentDataType.INTEGER, page);
+        ci.getItemStack().setItemMeta(itemMeta);*/
+
+        CustomItem ci = new CustomItem(Material.ARROW)
+                .setName(MessageUtils.getAndFormatMsg(false, "nextBtn", "&cNext"))
+                .setCustomModelID(997)
+                .addFlag(ItemFlag.HIDE_ATTRIBUTES)
+                .makeForbidden();
 
         ItemMeta itemMeta = ci.getItemStack().getItemMeta();
         itemMeta.getPersistentDataContainer().set(REVIVE_PAGE_KEY, PersistentDataType.INTEGER, page);

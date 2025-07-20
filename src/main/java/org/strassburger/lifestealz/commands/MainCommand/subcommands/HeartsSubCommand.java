@@ -58,7 +58,12 @@ public final class HeartsSubCommand implements SubCommand {
                 return false;
             }
 
-            PlayerData playerData = (player.isOnline() ? storage.load(player.getUniqueId()) : storage.loadByUsername(player.getName()));
+            PlayerData playerData;
+
+            if(plugin.getConfig().getBoolean("searchDatabaseByName", false))
+                playerData = (player.isOnline() ? storage.load(player.getUniqueId()) : storage.loadByUsername(player.getName()));
+            else
+                playerData = plugin.getStorage().load(player.getUniqueId());
 
             int hearts = (int) (playerData.getMaxHealth() / 2);
             sender.sendMessage(MessageUtils.getAndFormatMsg(true, "getHearts", "&c%player% &7currently has &c%amount% &7hearts!",
@@ -93,7 +98,13 @@ public final class HeartsSubCommand implements SubCommand {
             if (targetPlayer == null && targetPlayers.size() > 1) continue;
 
             assert targetPlayer != null;
-            PlayerData targetPlayerData = (targetPlayer.isOnline() ? storage.load(targetPlayer.getUniqueId()) : storage.loadByUsername(targetPlayer.getName()));
+
+            PlayerData targetPlayerData;
+
+            if(plugin.getConfig().getBoolean("searchDatabaseByName", false))
+                targetPlayerData = (targetPlayer.isOnline() ? storage.load(targetPlayer.getUniqueId()) : storage.loadByUsername(targetPlayer.getName()));
+            else
+                targetPlayerData = plugin.getStorage().load(targetPlayer.getUniqueId());
 
             double maxAllowedHearts = config.getInt("maxHearts") * 2;
             Player targetOnlinePlayer = targetPlayer.getPlayer();

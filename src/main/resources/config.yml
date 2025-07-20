@@ -43,6 +43,8 @@ minHearts: 0
 # This option will enforce the heart limit on admin commands like /lifestealz hearts <add, set> <player> <amount>
 # Note that this
 enforceMaxHeartsOnAdminCommands: false
+# If the database should be searched by name instead of UUID for offline players for offline servers.
+searchDatabaseByName: true
 # The custom items that should be used for the following scenarios (Must be an id from the items.yml)
 heartItem:
   # This item will be used for anything that is not listed below (mostly legacy)

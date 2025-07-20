@@ -191,7 +191,12 @@ public final class InteractionListener implements Listener {
         }
 
         // NOW USES CUSTOM MODEL
-        if (plugin.getConfig().getBoolean("playTotemEffect")) playHeartAnimation(player);
+        //if (plugin.getConfig().getBoolean("playTotemEffect")) playHeartAnimation(player);
+        try{
+            if (plugin.getConfig().getBoolean("playTotemEffect")) player.playEffect(EntityEffect.TOTEM_RESURRECT);
+        }catch (Exception ex){
+            // If the effect is not supported, we can just ignore it, just so errors aren't thrown.
+        }
 
         player.sendMessage(MessageUtils.getAndFormatMsg(true, "heartconsume", "&7Consumed a heart and got &c%amount% &7hearts!", new MessageUtils.Replaceable("%amount%", savedHeartAmount + "")));
         CooldownManager.lastHeartUse.put(player.getUniqueId(), System.currentTimeMillis());

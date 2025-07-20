@@ -83,7 +83,10 @@ public final class HeartCommand implements CommandExecutor, TabCompleter {
                 return false;
             }
 
-            playerdata = (target.isOnline() ? plugin.getStorage().load(target.getUniqueId()) : plugin.getStorage().loadByUsername(target.getName()));
+            if(plugin.getConfig().getBoolean("searchDatabaseByName", false))
+                playerdata = (target.isOnline() ? plugin.getStorage().load(target.getUniqueId()) : plugin.getStorage().loadByUsername(target.getName()));
+            else
+                playerdata = plugin.getStorage().load(target.getUniqueId());
         }
 
         if (playerdata == null) {
